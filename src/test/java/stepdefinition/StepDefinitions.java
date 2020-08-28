@@ -14,7 +14,6 @@ import utils.WebDriverFactory;
 import java.io.File;
 import java.io.IOException;
 
-
 public class StepDefinitions {
 
   @Before
@@ -45,7 +44,7 @@ public class StepDefinitions {
 
   @Then("^I navigate to Jira Login Page$")
   public void navigateToLoginPage() {
-    new LoginPage().navigateTo();
+    new HomePage().navigateToHomePage();
   }
 
   @Then("^I enter user name - \"(.*?)\"$")
@@ -60,12 +59,17 @@ public class StepDefinitions {
 
   @Then("^I click on the login button$")
   public void clickLoginButton() {
-    new LoginPage().clickLogin();
+    new LoginPage().clickLoginButton();
   }
 
-  @When("^I am on the Home Page$")
-  public void atTheHomePage() {
-    assert new HomePage().onPage();
+  @When("^I found user icon$")
+  public void foundUserIcon() {
+    assert new HomePage().findUserIcon();
+  }
+
+  @When("^I see error message - \"(.*?)\"$")
+  public void errorMessage(String expectedResult) {
+    assert new LoginPage().errorMessageIsPresent(expectedResult);
   }
 
   @When("^I debug$")

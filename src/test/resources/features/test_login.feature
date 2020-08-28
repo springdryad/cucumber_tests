@@ -6,13 +6,18 @@ Feature: Login To Jira
     And I enter user name - "RuslanaChumachenko"
     And I enter password - "RuslanaChumachenko"
     And I click on the login button
-    Then I am on the Home Page
+    Then I found user icon
 
-  @Regression @wip
-  Scenario: Failed Login to Jira
+  @Regression
+  Scenario Outline: Failed Login to Jira
     Given I navigate to Jira Login Page
-    And I enter user name - "RuslanaChumachenko"
-    And I enter password - "RuslanaChumachenko"
+    And I enter user name - <user_name>
+    And I enter password - <password>
     And I click on the login button
     And I debug
-    Then I am on the Home Page
+    Then I see error message - <expected_result>
+
+    Examples:
+      | user_name            | password             | expected_result                                                                   |
+      | "RuslanaChumachenko" | "wrong_password"     | "Извините, имя пользователя или пароль неверны - пожалуйста, попробуйте еще раз." |
+      | "wrong_password"     | "RuslanaChumachenko" | "Извините, имя пользователя или пароль неверны - пожалуйста, попробуйте еще раз." |

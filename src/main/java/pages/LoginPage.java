@@ -1,7 +1,8 @@
 package pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.WebDriverFactory;
 
 public class LoginPage {
@@ -10,20 +11,21 @@ public class LoginPage {
   private By passwordInput = By.id("login-form-password");
   private By loginButton = By.id("login");
 
-  public void enterUserName(String name) {
-    WebDriverFactory.getDriver().findElement(userNameInput).clear();
-    WebDriverFactory.getDriver().findElement(userNameInput).sendKeys(name);
+  public void enterUserName(String username) {
+    new WebDriverWait(WebDriverFactory.getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(userNameInput)).clear();
+    WebDriverFactory.getDriver().findElement(userNameInput).sendKeys(username);
   }
 
   public void enterPassword(String password) {
     WebDriverFactory.getDriver().findElement(passwordInput).sendKeys(password);
   }
 
-  public void clickLogin() {
+  public void clickLoginButton() {
     WebDriverFactory.getDriver().findElement(loginButton).click();
   }
 
-  public void navigateTo() {
-    WebDriverFactory.getDriver().get("https://jira.hillel.it/secure/Dashboard.jspa");
+  public boolean errorMessageIsPresent(String message) {
+    new WebDriverWait(WebDriverFactory.getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), \"" + message + "\")]")));
+    return WebDriverFactory.getDriver().findElement(By.xpath("//*[contains(text(), \"" + message + "\")]")).isDisplayed();
   }
 }
