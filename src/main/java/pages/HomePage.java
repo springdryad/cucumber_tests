@@ -11,31 +11,18 @@ public class HomePage {
   private By tempWindowIssueCreated = By.xpath("//*[contains(@class,'aui-will-close')]");
   private By createIssueDialog = By.id("create-issue-dialog");
   private By userIcon = By.id("header-details-user-fullname");
+  private By browseLink = By.id("browse_link");
+
 
   public void navigateToHomePage() {
     WebDriverFactory.getDriver().get("https://jira.hillel.it/secure/Dashboard.jspa");
   }
 
   public void clickCreateIssue() {
-    clickOnElementWithRetry(createIssueButton, createIssueDialog, 3, 3);
-  }
-
-  private void clickOnElementWithRetry(By elementToBeClicked, By successCriteriaElement, int attempts, int timeOutInSeconds) {
-    WebDriverWait wait = new WebDriverWait(WebDriverFactory.getDriver(), timeOutInSeconds);
-    for (int i = 0; i < attempts; i++) {
-      try {
-        wait.until(ExpectedConditions.elementToBeClickable(elementToBeClicked));
-        WebDriverFactory.getDriver().findElement(elementToBeClicked).click();
-        break;
-      } catch (TimeoutException e) {
-      }
-    }
-    wait.until(ExpectedConditions.visibilityOfElementLocated(successCriteriaElement)).isDisplayed();
-  }
-
-  public boolean isCreateIssueButtonPresent() {
     WebDriverWait wait = new WebDriverWait(WebDriverFactory.getDriver(), 20);
-    return wait.until(ExpectedConditions.elementToBeClickable(createIssueButton)).isDisplayed();
+    wait.until(ExpectedConditions.elementToBeClickable(browseLink));
+    wait.until(ExpectedConditions.elementToBeClickable(createIssueButton)).click();
+
   }
 
   public boolean isIssueCreated(String text) {

@@ -8,9 +8,11 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import pages.CreateIssueWindow;
 import pages.HomePage;
 import pages.LoginPage;
 import utils.WebDriverFactory;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -42,6 +44,7 @@ public class StepDefinitions {
     Files.copy(scrFile, trgtFile);
   }
 
+  // Login tests
   @Then("^I navigate to Jira Login Page$")
   public void navigateToLoginPage() {
     new HomePage().navigateToHomePage();
@@ -70,6 +73,47 @@ public class StepDefinitions {
   @When("^I see error message - \"(.*?)\"$")
   public void errorMessage(String expectedResult) {
     assert new LoginPage().errorMessageIsPresent(expectedResult);
+  }
+
+  //Create Issue test
+  @Then("^I click Create Issue button$")
+  public void clickCreateIssueButton() {
+    new HomePage().clickCreateIssue();
+  }
+
+  @Then("^I enter Project - \"(.*?)\"$")
+  public void enterProject(String text) {
+    new CreateIssueWindow().enterProject(text);
+  }
+
+  @Then("^I enter Issue Type - \"(.*?)\"$")
+  public void enterIssueType(String text) {
+    new CreateIssueWindow().enterIssueType(text);
+  }
+
+  @Then("^I enter Summary - \"(.*?)\"$")
+  public void enterSummary(String text) {
+    new CreateIssueWindow().enterSummary(text);
+  }
+
+  @Then("^I enter Reporter - \"(.*?)\"$")
+  public void enterReporter(String text) {
+    new CreateIssueWindow().enterReporter(text);
+  }
+
+  @Then("^I enter Description - \"(.*?)\"$")
+  public void enterDescription(String text) {
+    new CreateIssueWindow().enterDescription(text);
+  }
+
+  @Then("^I click to submit issue$")
+  public void clickSubmitIssue() {
+    new CreateIssueWindow().pressSubmitIssueButton();
+  }
+
+  @When("^I see issue created pop up - \"(.*?)\"$")
+  public void isIssueCreated(String expectedResult) {
+    assert new HomePage().isIssueCreated(expectedResult);
   }
 
   @When("^I debug$")
